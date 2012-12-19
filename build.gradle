@@ -14,3 +14,7 @@ apply plugin: 'eclipse'
 repositories {
 	mavenCentral()
 }
+
+dependencies {
+	compile 'org.roboguice:roboguice:1.1'
+}
