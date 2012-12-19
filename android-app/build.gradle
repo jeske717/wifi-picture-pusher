@@ -16,5 +16,5 @@ repositories {
 }
 
 dependencies {
-	compile 'org.roboguice:roboguice:1.1'
+	compile 'org.roboguice:roboguice:2.0'
 }
