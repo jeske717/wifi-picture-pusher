@@ -3,6 +3,9 @@
       package="org.jesko.picture.pusher"
       android:versionCode="1"
       android:versionName="1.0">
+      
+    <uses-feature android:name="android.hardware.camera"></uses-feature>
+    
     <application android:label="@string/app_name" >
         <activity android:name="MainActivity"
                   android:label="@string/app_name">
@@ -12,4 +15,5 @@
             </intent-filter>
         </activity>
     </application>
+    
 </manifest> 
