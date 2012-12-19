@@ -2,3 +2,6 @@ bin/
 .gradle/
 build/
 local.properties
+.settings
+.classpath
+.project
