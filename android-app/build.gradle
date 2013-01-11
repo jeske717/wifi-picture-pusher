@@ -5,10 +5,12 @@ buildscript {
 
 	dependencies {
 		classpath 'org.gradle.api.plugins:gradle-android-plugin:1.2.1'
+		classpath 'net.ealden.gradle.plugins:gradle-androidannotations-plugin:+'
 	}
 }
 
 apply plugin: 'android'
+apply plugin: 'androidannotations'
 apply plugin: 'eclipse'
 
 repositories {
