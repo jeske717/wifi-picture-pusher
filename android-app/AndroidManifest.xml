@@ -7,9 +7,9 @@
     <uses-feature android:name="android.hardware.camera"></uses-feature>
 	<uses-sdk android:minSdkVersion="15"></uses-sdk>
 	
-	<permission android:name="android.permission.INTERNET" />
-	<permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
-	    
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+	
     <application android:label="@string/app_name" >
         <activity android:name="MainActivity_"
                   android:label="@string/app_name">

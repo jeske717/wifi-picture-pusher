@@ -1,5 +1,9 @@
 package org.jesko.picture.sucker.config;
 
+import java.io.IOException;
+
+import javax.jmdns.JmDNS;
+
 import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
 import org.codehaus.jackson.annotate.JsonMethod;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -16,6 +20,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class WebConfig extends WebMvcConfigurerAdapter {
 	
 	public static final String JSON_PROFILE = "json";
+	
+	@Bean
+	public JmDNS jmdns() throws IOException {
+		return JmDNS.create();
+	}
 	
 	@Configuration @Profile(value = JSON_PROFILE)
 	static class Json {

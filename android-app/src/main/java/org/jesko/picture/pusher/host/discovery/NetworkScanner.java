@@ -8,6 +8,7 @@ import javax.jmdns.ServiceListener;
 
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.MulticastLock;
+import android.util.Log;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -59,6 +60,7 @@ public class NetworkScanner {
 		
 		@Override
 		public void serviceAdded(ServiceEvent event) {
+			Log.i(PictureSuckerServiceListener.class.getName(), "Found service: " + event.getName());
 			if(event.getName().startsWith(SERVICE_PREFIX)) {
 				jmDns.requestServiceInfo(event.getType(), event.getName());
 			}
@@ -66,6 +68,7 @@ public class NetworkScanner {
 		
 		@Override
 		public void serviceResolved(ServiceEvent event) {
+			Log.i(PictureSuckerServiceListener.class.getName(), "Resolved service: " + event.getName());
 			listener.compatibleServiceFound(event.getInfo().getHostAddresses()[0] + event.getInfo().getPort());
 		}
 		
