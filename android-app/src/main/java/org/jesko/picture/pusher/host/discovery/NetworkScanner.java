@@ -69,7 +69,7 @@ public class NetworkScanner {
 		@Override
 		public void serviceResolved(ServiceEvent event) {
 			Log.i(PictureSuckerServiceListener.class.getName(), "Resolved service: " + event.getName());
-			listener.compatibleServiceFound(event.getInfo().getHostAddresses()[0] + event.getInfo().getPort());
+			listener.compatibleServiceFound("http://" + event.getInfo().getHostAddresses()[0] + ":" + event.getInfo().getPort());
 		}
 		
 		@Override

@@ -1,0 +1,5 @@
+
+    <resources>
+        <string-array name="roboguice_modules">
+        </string-array>
+    </resources>

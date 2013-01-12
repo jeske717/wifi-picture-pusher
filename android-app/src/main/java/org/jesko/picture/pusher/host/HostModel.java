@@ -7,6 +7,7 @@ import org.jesko.picture.pusher.host.discovery.DiscoveryListener;
 import org.jesko.picture.pusher.host.discovery.NetworkScanner;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -30,6 +31,7 @@ public class HostModel implements DiscoveryListener {
 	public void compatibleServiceFound(String endpoint) {
 		Host newHost = hostResolver.resolve(endpoint);
 		if(newHost != null) {
+			Log.i(getClass().getName(), "Found a host! : " + newHost.getHost());
 			hosts.add(newHost);
 			listener.newHostFound(hosts);
 		}
