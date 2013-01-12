@@ -6,7 +6,7 @@ import org.jesko.picture.pusher.host.Host;
 import org.jesko.picture.pusher.host.HostListener;
 import org.jesko.picture.pusher.host.HostModel;
 
-import android.app.Activity;
+import roboguice.activity.RoboActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,12 +16,10 @@ import com.google.inject.Inject;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.RoboGuice;
 import com.googlecode.androidannotations.annotations.UiThread;
 
-@RoboGuice
 @EActivity(value = R.layout.main)
-public class MainActivity extends Activity implements HostListener {
+public class MainActivity extends RoboActivity implements HostListener {
 	
 	private static final int PICTURE_REQUEST_CODE = 16;
 	
@@ -34,6 +32,13 @@ public class MainActivity extends Activity implements HostListener {
 		
 		obtainHost();
 	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		
+		hostModel.removeHostListener();
+	}
 
 	@Click
 	public void takePicture() {
@@ -43,7 +48,7 @@ public class MainActivity extends Activity implements HostListener {
 	
 	@Background
 	public void obtainHost() {
-		hostModel.addHostListener(this);
+		hostModel.setHostListener(this);
 	}
 
 	@Override

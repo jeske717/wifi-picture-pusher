@@ -25,20 +25,6 @@ public class HostModel implements DiscoveryListener {
 	
 	private HostListener listener;
 	private List<Host> hosts = new ArrayList<Host>();
-	
-
-	public void addHostListener(HostListener listener) {
-		this.listener = listener;
-		
-		String savedHost = preferences.getString(PREFERRED_HOST_KEY, "");
-		if("".equals(savedHost)) {
-			networkScanner.start(this);
-		} else {
-			Host preferredHost = hostResolver.resolve(savedHost);
-			hosts.add(preferredHost);
-			listener.preferredHostFound(preferredHost);
-		}
-	}
 
 	@Override
 	public void compatibleServiceFound(String endpoint) {
@@ -52,6 +38,24 @@ public class HostModel implements DiscoveryListener {
 	@Override
 	public void errorOccured(Throwable cause) {
 		listener.errorWithDiscovery(cause);
+	}
+
+	public void removeHostListener() {
+		networkScanner.stop();
+		listener = null;
+	}
+	
+	public void setHostListener(HostListener listener) {
+		this.listener = listener;
+		
+		String savedHost = preferences.getString(PREFERRED_HOST_KEY, "");
+		if("".equals(savedHost)) {
+			networkScanner.start(this);
+		} else {
+			Host preferredHost = hostResolver.resolve(savedHost);
+			hosts.add(preferredHost);
+			listener.preferredHostFound(preferredHost);
+		}
 	}
 
 }

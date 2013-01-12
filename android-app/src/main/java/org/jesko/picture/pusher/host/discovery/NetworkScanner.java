@@ -52,6 +52,7 @@ public class NetworkScanner {
 			listener.errorOccured(e);
 		}
 		lock.release();
+		listener = null;
 	}
 	
 	private class PictureSuckerServiceListener implements ServiceListener {
