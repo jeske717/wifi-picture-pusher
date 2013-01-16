@@ -3,4 +3,7 @@
     <string name="app_name">Wifi Picture Pusher</string>
     <string name="error_with_discovery_service">There was an error while discovering Wifi Picture Suckers on your network</string>
     <string name="done">Done</string>
+    <string name="picture_activity_label">Pictures</string>
+    <string name="main_activity_label">Connect to hosts</string>
+    <string name="take_picture">Take Picture</string>
 </resources>

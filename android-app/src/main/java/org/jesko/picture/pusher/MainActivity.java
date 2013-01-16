@@ -5,8 +5,10 @@ import java.util.List;
 import org.jesko.picture.pusher.host.Host;
 import org.jesko.picture.pusher.host.HostListener;
 import org.jesko.picture.pusher.host.HostModel;
+import org.jesko.picture.pusher.service.PictureSuckerServiceModel;
 
 import roboguice.activity.RoboActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
+import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ItemClick;
 import com.googlecode.androidannotations.annotations.UiThread;
@@ -24,7 +27,8 @@ public class MainActivity extends RoboActivity implements HostListener {
 	
 	@Inject
 	private HostModel hostModel;
-	
+	@Inject
+	private PictureSuckerServiceModel serviceModel;
 	@Inject
 	private HostAdapter hostAdapter;
 	
@@ -34,7 +38,6 @@ public class MainActivity extends RoboActivity implements HostListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		obtainHost();
 	}
 	
@@ -46,7 +49,6 @@ public class MainActivity extends RoboActivity implements HostListener {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		
 		hostModel.removeHostListener();
 	}
 
@@ -62,7 +64,7 @@ public class MainActivity extends RoboActivity implements HostListener {
 	}
 
 	@UiThread
-	@Override
+	@Override 
 	public void newHostFound(List<Host> allHosts) {
 		hostAdapter.addAll(allHosts);
 	}
@@ -74,7 +76,14 @@ public class MainActivity extends RoboActivity implements HostListener {
 	}
 	
 	@ItemClick(R.id.hostList)
-	public void hostClicked(boolean isSelected, Host host) {
+	public void hostClicked(Host host) {
+		serviceModel.toggleHost(host);
+	}
+	
+	@Click
+	public void hostsSelected() {
+		Intent pictureIntent = new Intent(this, PictureActivity_.class);
+		startActivity(pictureIntent);
 	}
 	
 }
