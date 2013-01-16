@@ -26,7 +26,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return JmDNS.create();
 	}
 	
-	@Configuration @Profile(value = JSON_PROFILE)
+	@Configuration 
+	@Profile(value = JSON_PROFILE)
 	static class Json {
 		@Bean
 		public ObjectMapper objectMapper() {

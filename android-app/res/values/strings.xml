@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Wifi Picture Pusher</string>
     <string name="error_with_discovery_service">There was an error while discovering Wifi Picture Suckers on your network</string>
+    <string name="done">Done</string>
 </resources>
