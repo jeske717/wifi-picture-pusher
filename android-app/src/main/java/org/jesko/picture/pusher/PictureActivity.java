@@ -50,13 +50,6 @@ public class PictureActivity extends RoboActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-			ImageView imageView = new ImageView(this);
-			imageView.setImageBitmap(BitmapFactory.decodeFile(imageNamer.getCurrentFile().getAbsolutePath()));
-			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-			imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
-			
-			thumbnailView.addView(imageView);
-			
 			startUpload(imageNamer.getCurrentFile());
 		}
 	}

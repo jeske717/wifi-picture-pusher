@@ -9,6 +9,7 @@ import java.util.Set;
 import org.jesko.picture.pusher.host.Host;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
@@ -29,6 +30,7 @@ public class PictureSuckerServiceModel {
 	public PictureSuckerServiceModel(RestTemplate restTemplate) {
 		this.restTemplate = restTemplate;
 		restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
+		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 	}
 	
 	public void toggleHost(Host host) {
@@ -47,7 +49,8 @@ public class PictureSuckerServiceModel {
 			try {
 				URI destination = new URI("http://" + host.getHost() + ":" + host.getPort() + "/upload");
 				Log.i(getClass().getName(), "Posting file to destination: " + destination);
-				restTemplate.postForLocation(destination, upload);
+				UploadResult result = restTemplate.postForObject(destination, upload, UploadResult.class);
+				Log.i(getClass().getName(), "Result: " + result.getResult());
 			} catch (RestClientException e) {
 				Log.e(getClass().getName(), Log.getStackTraceString(e));
 			} catch (URISyntaxException e) {

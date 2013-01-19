@@ -48,7 +48,9 @@ public class WebController {
 	public @ResponseBody UploadResult uploadImage(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
 		file.transferTo(new File("/Users/ben/", file.getOriginalFilename()));
 		log.info("uploaded file of size: " + file.getSize() + " received");
-		return new UploadResult();
+		UploadResult uploadResult = new UploadResult();
+		uploadResult.setResult("SUCCESS");
+		return uploadResult;
 	}
 	
 }
