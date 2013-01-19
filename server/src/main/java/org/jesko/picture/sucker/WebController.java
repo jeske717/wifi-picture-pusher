@@ -5,11 +5,15 @@ import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
+import org.jesko.picture.sucker.bean.HostInfo;
+import org.jesko.picture.sucker.bean.UploadResult;
 import org.jesko.picture.sucker.discovery.AutoDiscoveryPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class WebController {
@@ -32,6 +36,12 @@ public class WebController {
 		hostInfo.setHost(InetAddress.getLocalHost().toString());
 		hostInfo.setPort(Main.PORT);
 		return hostInfo;
+	}
+	
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public @ResponseBody UploadResult uploadImage(@RequestParam("file") MultipartFile file) {
+		System.out.println("uploaded file of size: " + file.getSize() + " received");
+		return new UploadResult();
 	}
 	
 }

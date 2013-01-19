@@ -1,9 +1,9 @@
 package org.jesko.picture.pusher;
 
+import org.jesko.picture.pusher.service.ImageNamer;
 import org.jesko.picture.pusher.service.PictureSuckerServiceModel;
 
 import roboguice.activity.RoboActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.google.inject.Inject;
+import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ViewById;
@@ -24,6 +25,8 @@ public class PictureActivity extends RoboActivity {
 	
 	@Inject
 	private PictureSuckerServiceModel serviceModel;
+	@Inject
+	private ImageNamer imageNamer;
 	
 	@ViewById
 	GridLayout thumbnailView;
@@ -36,19 +39,27 @@ public class PictureActivity extends RoboActivity {
 	@Click
 	public void takePicture() {
 		Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageNamer.generateNextFileName());
 		startActivityForResult(cameraIntent, REQUEST_CODE);
 	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == REQUEST_CODE) {
-			Bitmap thumbnail = (Bitmap)data.getExtras().get("data");
+			Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
 			ImageView imageView = new ImageView(this);
 			imageView.setImageBitmap(thumbnail);
 			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
 			
 			thumbnailView.addView(imageView);
+			
+			startUpload(imageNamer.getCurrentFileName());
 		}
+	}
+	
+	@Background
+	public void startUpload(String file) {
+		serviceModel.startUpload(file);
 	}
 }

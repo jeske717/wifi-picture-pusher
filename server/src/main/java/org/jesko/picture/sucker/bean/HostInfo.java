@@ -1,4 +1,4 @@
-package org.jesko.picture.sucker;
+package org.jesko.picture.sucker.bean;
 
 public class HostInfo {
 
