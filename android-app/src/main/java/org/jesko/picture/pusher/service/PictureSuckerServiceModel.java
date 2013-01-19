@@ -40,12 +40,14 @@ public class PictureSuckerServiceModel {
 	}
 
 	public void startUpload(File file) {
-		Log.i(getClass().getName(), "uploading file from: " + file);
+		Log.i(getClass().getName(), "Requested upload from: " + file);
 		MultiValueMap<String, Object> upload = new LinkedMultiValueMap<String, Object>();
 		upload.add("file", new FileSystemResource(file));
 		for (Host host : hosts) {
 			try {
-				restTemplate.postForLocation(new URI("http://" + host.getHost() + ":" + host.getPort()), upload);
+				URI destination = new URI("http://" + host.getHost() + ":" + host.getPort() + "/upload");
+				Log.i(getClass().getName(), "Posting file to destination: " + destination);
+				restTemplate.postForLocation(destination, upload);
 			} catch (RestClientException e) {
 				Log.e(getClass().getName(), Log.getStackTraceString(e));
 			} catch (URISyntaxException e) {

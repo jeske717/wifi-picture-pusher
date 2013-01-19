@@ -1,5 +1,7 @@
 package org.jesko.picture.sucker;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -37,13 +39,14 @@ public class WebController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public @ResponseBody HostInfo getHostInfo() throws UnknownHostException {
 		HostInfo hostInfo = new HostInfo();
-		hostInfo.setHost(InetAddress.getLocalHost().toString());
+		hostInfo.setHost(InetAddress.getLocalHost().getHostAddress());
 		hostInfo.setPort(Main.PORT);
 		return hostInfo;
 	}
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public @ResponseBody UploadResult uploadImage(@RequestParam("file") MultipartFile file) {
+	public @ResponseBody UploadResult uploadImage(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
+		file.transferTo(new File("/Users/ben/", file.getOriginalFilename()));
 		log.info("uploaded file of size: " + file.getSize() + " received");
 		return new UploadResult();
 	}

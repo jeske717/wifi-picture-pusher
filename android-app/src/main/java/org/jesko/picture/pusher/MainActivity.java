@@ -48,7 +48,7 @@ public class MainActivity extends RoboActivity implements HostListener {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		hostModel.removeHostListener();
+		removeHostListener();
 	}
 
 	@Background
@@ -81,6 +81,12 @@ public class MainActivity extends RoboActivity implements HostListener {
 	
 	@Click
 	public void hostsSelected() {
+		removeHostListener();
 		PictureActivity_.intent(this).start();
+	}
+
+	@Background
+	void removeHostListener() {
+		hostModel.removeHostListener();
 	}
 }

@@ -12,4 +12,6 @@ dependencies {
 	compile 'javax.jmdns:jmdns:3.4.1'
 	compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.5'
 	compile 'javax.inject:javax.inject:1'
+	compile 'commons-fileupload:commons-fileupload:1.2.2'
+	compile 'commons-io:commons-io:2.4'
 }
