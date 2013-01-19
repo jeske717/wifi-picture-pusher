@@ -8,7 +8,6 @@ import org.jesko.picture.pusher.host.HostModel;
 import org.jesko.picture.pusher.service.PictureSuckerServiceModel;
 
 import roboguice.activity.RoboActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -82,8 +81,6 @@ public class MainActivity extends RoboActivity implements HostListener {
 	
 	@Click
 	public void hostsSelected() {
-		Intent pictureIntent = new Intent(this, PictureActivity_.class);
-		startActivity(pictureIntent);
+		PictureActivity_.intent(this).start();
 	}
-	
 }
