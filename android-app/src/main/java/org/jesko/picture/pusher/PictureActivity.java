@@ -1,11 +1,16 @@
 package org.jesko.picture.pusher;
 
+import java.io.File;
+
 import org.jesko.picture.pusher.service.ImageNamer;
 import org.jesko.picture.pusher.service.PictureSuckerServiceModel;
 
 import roboguice.activity.RoboActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.GridLayout;
@@ -39,27 +44,26 @@ public class PictureActivity extends RoboActivity {
 	@Click
 	public void takePicture() {
 		Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageNamer.generateNextFileName());
+		cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageNamer.generateNextFile()));
 		startActivityForResult(cameraIntent, REQUEST_CODE);
 	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == REQUEST_CODE) {
-			Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+		if(requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 			ImageView imageView = new ImageView(this);
-			imageView.setImageBitmap(thumbnail);
+			imageView.setImageBitmap(BitmapFactory.decodeFile(imageNamer.getCurrentFile().getAbsolutePath()));
 			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
 			
 			thumbnailView.addView(imageView);
 			
-			startUpload(imageNamer.getCurrentFileName());
+			startUpload(imageNamer.getCurrentFile());
 		}
 	}
 	
 	@Background
-	public void startUpload(String file) {
+	public void startUpload(File file) {
 		serviceModel.startUpload(file);
 	}
 }

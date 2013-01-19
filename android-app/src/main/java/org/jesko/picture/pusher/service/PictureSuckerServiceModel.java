@@ -1,5 +1,6 @@
 package org.jesko.picture.pusher.service;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashSet;
@@ -38,7 +39,7 @@ public class PictureSuckerServiceModel {
 		}
 	}
 
-	public void startUpload(String file) {
+	public void startUpload(File file) {
 		Log.i(getClass().getName(), "uploading file from: " + file);
 		MultiValueMap<String, Object> upload = new LinkedMultiValueMap<String, Object>();
 		upload.add("file", new FileSystemResource(file));
@@ -46,9 +47,9 @@ public class PictureSuckerServiceModel {
 			try {
 				restTemplate.postForLocation(new URI("http://" + host.getHost() + ":" + host.getPort()), upload);
 			} catch (RestClientException e) {
-				Log.e(getClass().getName(), "error communicating with endpoint", e);
+				Log.e(getClass().getName(), Log.getStackTraceString(e));
 			} catch (URISyntaxException e) {
-				Log.e(getClass().getName(), "error communicating with endpoint", e);
+				Log.e(getClass().getName(), Log.getStackTraceString(e));
 			}
 		}
 	}

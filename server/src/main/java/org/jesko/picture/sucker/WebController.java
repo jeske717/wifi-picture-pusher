@@ -5,6 +5,8 @@ import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jesko.picture.sucker.bean.HostInfo;
 import org.jesko.picture.sucker.bean.UploadResult;
 import org.jesko.picture.sucker.discovery.AutoDiscoveryPublisher;
@@ -18,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class WebController {
 
+	private static final Log log = LogFactory.getLog(WebController.class);
+	
 	@Inject
 	public WebController(final AutoDiscoveryPublisher publisher) {
 		new Thread(new Runnable() {
@@ -40,7 +44,7 @@ public class WebController {
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody UploadResult uploadImage(@RequestParam("file") MultipartFile file) {
-		System.out.println("uploaded file of size: " + file.getSize() + " received");
+		log.info("uploaded file of size: " + file.getSize() + " received");
 		return new UploadResult();
 	}
 	
