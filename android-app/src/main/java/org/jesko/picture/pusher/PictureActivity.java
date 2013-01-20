@@ -8,13 +8,10 @@ import org.jesko.picture.pusher.service.PictureSuckerServiceModel;
 import roboguice.activity.RoboActivity;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.ImageView;
 
 import com.google.inject.Inject;
 import com.googlecode.androidannotations.annotations.Background;
