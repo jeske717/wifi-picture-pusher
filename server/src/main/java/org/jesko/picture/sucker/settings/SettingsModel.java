@@ -25,7 +25,6 @@ public class SettingsModel {
 	private File configFile = new File(new File("."), "config.json");
 	private Settings settings;
 
-	
 	@PostConstruct
 	public void reloadFromDisk() {
 		try {
