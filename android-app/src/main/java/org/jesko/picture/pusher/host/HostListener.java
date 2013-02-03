@@ -2,11 +2,13 @@ package org.jesko.picture.pusher.host;
 
 import java.util.List;
 
+import org.jesko.picture.pusher.beans.HostInfo;
+
 public interface HostListener {
 
-	void preferredHostFound(Host host);
+	void preferredHostFound(HostInfo host);
 	
-	void newHostFound(List<Host> allHosts);
+	void newHostFound(List<HostInfo> allHosts);
 
 	void errorWithDiscovery(Throwable cause);
 }

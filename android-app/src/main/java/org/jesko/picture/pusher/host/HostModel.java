@@ -3,6 +3,7 @@ package org.jesko.picture.pusher.host;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jesko.picture.pusher.beans.HostInfo;
 import org.jesko.picture.pusher.host.discovery.DiscoveryListener;
 import org.jesko.picture.pusher.host.discovery.NetworkScanner;
 
@@ -25,11 +26,11 @@ public class HostModel implements DiscoveryListener {
 	private SharedPreferences preferences;
 	
 	private HostListener listener;
-	private List<Host> hosts = new ArrayList<Host>();
+	private List<HostInfo> hosts = new ArrayList<HostInfo>();
 
 	@Override
 	public void compatibleServiceFound(String endpoint) {
-		Host newHost = hostResolver.resolve(endpoint);
+		HostInfo newHost = hostResolver.resolve(endpoint);
 		if(newHost != null) {
 			Log.i(getClass().getName(), "Found a host! : " + newHost.getHost());
 			hosts.add(newHost);
@@ -54,7 +55,7 @@ public class HostModel implements DiscoveryListener {
 		if("".equals(savedHost)) {
 			networkScanner.start(this);
 		} else {
-			Host preferredHost = hostResolver.resolve(savedHost);
+			HostInfo preferredHost = hostResolver.resolve(savedHost);
 			hosts.add(preferredHost);
 			listener.preferredHostFound(preferredHost);
 		}

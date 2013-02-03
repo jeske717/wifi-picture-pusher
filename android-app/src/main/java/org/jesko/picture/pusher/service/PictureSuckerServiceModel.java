@@ -6,7 +6,8 @@ import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jesko.picture.pusher.host.Host;
+import org.jesko.picture.pusher.beans.HostInfo;
+import org.jesko.picture.pusher.beans.UploadResult;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -23,7 +24,7 @@ import com.google.inject.Singleton;
 @Singleton
 public class PictureSuckerServiceModel {
 
-	private final Set<Host> hosts = new HashSet<Host>();
+	private final Set<HostInfo> hosts = new HashSet<HostInfo>();
 	private final RestTemplate restTemplate;
 	private UploadListener uploadListener;
 	
@@ -34,7 +35,7 @@ public class PictureSuckerServiceModel {
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 	}
 	
-	public void toggleHost(Host host) {
+	public void toggleHost(HostInfo host) {
 		if(hosts.contains(host)) {
 			hosts.remove(host);
 		} else {
@@ -46,7 +47,7 @@ public class PictureSuckerServiceModel {
 		Log.i(getClass().getName(), "Requested upload from: " + file);
 		MultiValueMap<String, Object> upload = new LinkedMultiValueMap<String, Object>();
 		upload.add("file", new FileSystemResource(file));
-		for (Host host : hosts) {
+		for (HostInfo host : hosts) {
 			String finishedMessage = "";
 			try {
 				URI destination = new URI("http://" + host.getHost() + ":" + host.getPort() + "/upload");

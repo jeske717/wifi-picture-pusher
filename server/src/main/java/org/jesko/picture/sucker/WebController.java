@@ -3,7 +3,7 @@ package org.jesko.picture.sucker;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.jesko.picture.sucker.bean.HostInfo;
+import org.jesko.picture.pusher.beans.HostInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

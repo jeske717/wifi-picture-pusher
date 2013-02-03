@@ -28,6 +28,7 @@ dependencies {
 	compile 'javax.inject:javax.inject:1'
 	compile 'commons-fileupload:commons-fileupload:1.2.2'
 	compile 'commons-io:commons-io:2.4'
+	compile project(':shared')
 }
 
 task oneJar(type: OneJar) {

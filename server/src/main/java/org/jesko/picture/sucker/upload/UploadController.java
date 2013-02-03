@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import org.jesko.picture.sucker.bean.UploadResult;
+import org.jesko.picture.pusher.beans.UploadResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

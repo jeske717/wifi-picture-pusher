@@ -1,1 +1,1 @@
-include 'android-app', 'server'
+include 'android-app', 'server', 'shared'

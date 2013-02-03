@@ -1,4 +1,4 @@
-package org.jesko.picture.pusher.service;
+package org.jesko.picture.pusher.beans;
 
 public class UploadResult {
 

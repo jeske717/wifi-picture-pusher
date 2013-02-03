@@ -1,17 +1,10 @@
-package org.jesko.picture.pusher.host;
+package org.jesko.picture.pusher.beans;
 
-public class Host {
+public class HostInfo {
 
 	private String host;
 	private int port;
-	
-	public String getHost() {
-		return host;
-	}
-	public int getPort() {
-		return port;
-	}
-	
+
 	public void setHost(String host) {
 		this.host = host;
 	}
@@ -19,6 +12,15 @@ public class Host {
 	public void setPort(int port) {
 		this.port = port;
 	}
+	
+	public String getHost() {
+		return host;
+	}
+
+	public int getPort() {
+		return port;
+	}
+	
 	@Override
 	public String toString() {
 		return host + ":" + port;

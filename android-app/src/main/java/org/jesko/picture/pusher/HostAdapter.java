@@ -1,6 +1,6 @@
 package org.jesko.picture.pusher;
 
-import org.jesko.picture.pusher.host.Host;
+import org.jesko.picture.pusher.beans.HostInfo;
 
 import roboguice.inject.ContextSingleton;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import com.google.inject.Inject;
 
 @ContextSingleton
-public class HostAdapter extends ArrayAdapter<Host>{
+public class HostAdapter extends ArrayAdapter<HostInfo>{
 
 	@Inject
 	public HostAdapter(Context context) {

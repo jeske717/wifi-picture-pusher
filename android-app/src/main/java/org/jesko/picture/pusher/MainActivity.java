@@ -2,7 +2,7 @@ package org.jesko.picture.pusher;
 
 import java.util.List;
 
-import org.jesko.picture.pusher.host.Host;
+import org.jesko.picture.pusher.beans.HostInfo;
 import org.jesko.picture.pusher.host.HostListener;
 import org.jesko.picture.pusher.host.HostModel;
 import org.jesko.picture.pusher.service.PictureSuckerServiceModel;
@@ -57,14 +57,14 @@ public class MainActivity extends RoboActivity implements HostListener {
 	}
 
 	@Override
-	public void preferredHostFound(Host host) {
+	public void preferredHostFound(HostInfo host) {
 		hostAdapter.add(host);
 		hostList.setItemChecked(hostAdapter.getPosition(host), true);
 	}
 
 	@UiThread
 	@Override 
-	public void newHostFound(List<Host> allHosts) {
+	public void newHostFound(List<HostInfo> allHosts) {
 		hostAdapter.addAll(allHosts);
 	}
 
@@ -75,7 +75,7 @@ public class MainActivity extends RoboActivity implements HostListener {
 	}
 	
 	@ItemClick(R.id.hostList)
-	public void hostClicked(Host host) {
+	public void hostClicked(HostInfo host) {
 		serviceModel.toggleHost(host);
 	}
 	
