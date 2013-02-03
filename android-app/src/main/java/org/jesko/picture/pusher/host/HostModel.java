@@ -32,7 +32,7 @@ public class HostModel implements DiscoveryListener {
 	public void compatibleServiceFound(String endpoint) {
 		HostInfo newHost = hostResolver.resolve(endpoint);
 		if(newHost != null) {
-			Log.i(getClass().getName(), "Found a host! : " + newHost.getHost());
+			Log.i(getClass().getName(), "Found a host! : " + newHost.getAddress());
 			hosts.add(newHost);
 			listener.newHostFound(hosts);
 		}

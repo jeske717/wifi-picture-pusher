@@ -50,7 +50,7 @@ public class PictureSuckerServiceModel {
 		for (HostInfo host : hosts) {
 			String finishedMessage = "";
 			try {
-				URI destination = new URI("http://" + host.getHost() + ":" + host.getPort() + "/upload");
+				URI destination = new URI("http://" + host.getAddress() + ":" + host.getPort() + "/upload");
 				Log.i(getClass().getName(), "Posting file to destination: " + destination);
 				UploadResult result = restTemplate.postForObject(destination, upload, UploadResult.class);
 				Log.i(getClass().getName(), "Result: " + result.getResult());

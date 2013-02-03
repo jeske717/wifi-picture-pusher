@@ -15,7 +15,8 @@ public class WebController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public @ResponseBody HostInfo getHostInfo() throws UnknownHostException {
 		HostInfo hostInfo = new HostInfo();
-		hostInfo.setHost(InetAddress.getLocalHost().getHostAddress());
+		hostInfo.setAddress(InetAddress.getLocalHost().getHostAddress());
+		hostInfo.setHostName(InetAddress.getLocalHost().getHostName());
 		hostInfo.setPort(Main.PORT);
 		return hostInfo;
 	}
