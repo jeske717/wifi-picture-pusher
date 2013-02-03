@@ -21,11 +21,11 @@ public class AutoDiscoveryService {
 	
 	@PostConstruct
 	public void init() {
-		log.info("Started publishing picture sucker service for auto discovery");
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
+				log.info("Started publishing picture sucker service for auto discovery");
 				publisher.start();
 			}
 			

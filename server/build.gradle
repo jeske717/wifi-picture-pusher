@@ -1,5 +1,19 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'oneJar'
+
+buildscript {
+    repositories {
+		add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+			name = 'GitHub'
+			addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
+		}
+    }
+    
+    dependencies {
+		classpath 'curious-attempt-bunny:gradle-onejar:0.1-SNAPSHOT'
+	}
+}
 
 repositories {
 	mavenCentral()
@@ -15,3 +29,9 @@ dependencies {
 	compile 'commons-fileupload:commons-fileupload:1.2.2'
 	compile 'commons-io:commons-io:2.4'
 }
+
+task oneJar(type: OneJar) {
+	mainClass = "org.jesko.picture.sucker.Main"
+}
+
+oneJar.dependsOn jar
