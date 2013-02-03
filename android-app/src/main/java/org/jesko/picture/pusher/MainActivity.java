@@ -8,6 +8,7 @@ import org.jesko.picture.pusher.host.HostModel;
 import org.jesko.picture.pusher.service.PictureSuckerServiceModel;
 
 import roboguice.activity.RoboActivity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class MainActivity extends RoboActivity implements HostListener {
 	@Inject
 	private HostAdapter hostAdapter;
 	
+	private ProgressDialog loaderDialog;
 	@ViewById
 	ListView hostList;
 	
@@ -38,6 +40,11 @@ public class MainActivity extends RoboActivity implements HostListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		obtainHost();
+		loaderDialog = new ProgressDialog(this);
+		loaderDialog.setTitle("Searching for picture suckers on the network");
+		loaderDialog.setMessage("Searching...");
+		loaderDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		loaderDialog.show();
 	}
 	
 	@AfterViews
@@ -60,12 +67,16 @@ public class MainActivity extends RoboActivity implements HostListener {
 	public void preferredHostFound(HostInfo host) {
 		hostAdapter.add(host);
 		hostList.setItemChecked(hostAdapter.getPosition(host), true);
+		loaderDialog.dismiss();
 	}
 
 	@UiThread
 	@Override 
 	public void newHostFound(Set<HostInfo> allHosts) {
 		hostAdapter.addAll(allHosts);
+		if(allHosts.size() > 0) {
+			loaderDialog.dismiss();
+		}
 	}
 
 	@UiThread
