@@ -1,7 +1,7 @@
 package org.jesko.picture.pusher.host;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.jesko.picture.pusher.beans.HostInfo;
 import org.jesko.picture.pusher.host.discovery.DiscoveryListener;
@@ -26,7 +26,7 @@ public class HostModel implements DiscoveryListener {
 	private SharedPreferences preferences;
 	
 	private HostListener listener;
-	private List<HostInfo> hosts = new ArrayList<HostInfo>();
+	private Set<HostInfo> hosts = new HashSet<HostInfo>();
 
 	@Override
 	public void compatibleServiceFound(String endpoint) {
@@ -50,6 +50,7 @@ public class HostModel implements DiscoveryListener {
 	
 	public void setHostListener(HostListener listener) {
 		this.listener = listener;
+		listener.newHostFound(hosts);
 		
 		String savedHost = preferences.getString(PREFERRED_HOST_KEY, "");
 		if("".equals(savedHost)) {

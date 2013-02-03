@@ -1,6 +1,6 @@
 package org.jesko.picture.pusher;
 
-import java.util.List;
+import java.util.Set;
 
 import org.jesko.picture.pusher.beans.HostInfo;
 import org.jesko.picture.pusher.host.HostListener;
@@ -64,7 +64,7 @@ public class MainActivity extends RoboActivity implements HostListener {
 
 	@UiThread
 	@Override 
-	public void newHostFound(List<HostInfo> allHosts) {
+	public void newHostFound(Set<HostInfo> allHosts) {
 		hostAdapter.addAll(allHosts);
 	}
 
