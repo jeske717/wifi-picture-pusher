@@ -5,7 +5,6 @@ import java.util.Set;
 import org.jesko.picture.pusher.beans.HostInfo;
 import org.jesko.picture.pusher.host.HostListener;
 import org.jesko.picture.pusher.host.HostModel;
-import org.jesko.picture.pusher.service.PictureSuckerServiceModel;
 
 import roboguice.activity.RoboActivity;
 import android.app.ProgressDialog;
@@ -30,8 +29,6 @@ public class MainActivity extends RoboActivity implements HostListener {
 	
 	@Inject
 	private HostModel hostModel;
-	@Inject
-	private PictureSuckerServiceModel serviceModel;
 	@Inject
 	private HostAdapter hostAdapter;
 	
@@ -71,13 +68,6 @@ public class MainActivity extends RoboActivity implements HostListener {
 		hostModel.setHostListener(this);
 	}
 
-	@Override
-	public void preferredHostFound(HostInfo host) {
-		hostAdapter.add(host);
-		hostList.setItemChecked(hostAdapter.getPosition(host), true);
-		loaderDialog.dismiss();
-	}
-
 	@UiThread
 	@Override 
 	public void newHostFound(Set<HostInfo> allHosts) {
@@ -95,7 +85,7 @@ public class MainActivity extends RoboActivity implements HostListener {
 	
 	@ItemClick(R.id.hostList)
 	public void hostClicked(HostInfo host) {
-		serviceModel.toggleHost(host);
+		hostModel.toggleHost(host);
 	}
 	
 	@Click

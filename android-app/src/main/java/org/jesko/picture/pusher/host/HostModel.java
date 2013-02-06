@@ -7,7 +7,6 @@ import org.jesko.picture.pusher.beans.HostInfo;
 import org.jesko.picture.pusher.host.discovery.DiscoveryListener;
 import org.jesko.picture.pusher.host.discovery.NetworkScanner;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.inject.Inject;
@@ -22,11 +21,10 @@ public class HostModel implements DiscoveryListener {
 	private NetworkScanner networkScanner;
 	@Inject
 	private HostResolver hostResolver;
-	@Inject
-	private SharedPreferences preferences;
 	
 	private HostListener listener;
-	private Set<HostInfo> hosts = new HashSet<HostInfo>();
+	private final Set<HostInfo> hosts = new HashSet<HostInfo>();
+	private final Set<HostInfo> selectedHosts = new HashSet<HostInfo>();
 
 	@Override
 	public void compatibleServiceFound(String endpoint) {
@@ -52,14 +50,19 @@ public class HostModel implements DiscoveryListener {
 		this.listener = listener;
 		listener.newHostFound(hosts);
 		
-		String savedHost = preferences.getString(PREFERRED_HOST_KEY, "");
-		if("".equals(savedHost)) {
-			networkScanner.start(this);
+		networkScanner.start(this);
+	}
+	
+	public void toggleHost(HostInfo host) {
+		if(selectedHosts.contains(host)) {
+			selectedHosts.remove(host);
 		} else {
-			HostInfo preferredHost = hostResolver.resolve(savedHost);
-			hosts.add(preferredHost);
-			listener.preferredHostFound(preferredHost);
+			selectedHosts.add(host);
 		}
+	}
+	
+	public Set<HostInfo> getSelectedHosts() {
+		return selectedHosts;
 	}
 
 }

@@ -3,11 +3,10 @@ package org.jesko.picture.pusher.service;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.jesko.picture.pusher.beans.HostInfo;
 import org.jesko.picture.pusher.beans.UploadResult;
+import org.jesko.picture.pusher.host.HostModel;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -16,40 +15,33 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import roboguice.inject.ContextSingleton;
 import android.util.Log;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
-@Singleton
+@ContextSingleton
 public class PictureSuckerServiceModel {
 
-	private final Set<HostInfo> hosts = new HashSet<HostInfo>();
 	private final RestTemplate restTemplate;
 	private UploadListener uploadListener;
 	private final RetryModel retryModel;
+	private final HostModel hostModel;
 	
 	@Inject
-	public PictureSuckerServiceModel(RestTemplate restTemplate, RetryModel retryModel) {
+	public PictureSuckerServiceModel(RestTemplate restTemplate, RetryModel retryModel, HostModel hostModel) {
 		this.restTemplate = restTemplate;
 		this.retryModel = retryModel;
+		this.hostModel = hostModel;
 		restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 	}
 	
-	public void toggleHost(HostInfo host) {
-		if(hosts.contains(host)) {
-			hosts.remove(host);
-		} else {
-			hosts.add(host);
-		}
-	}
-
 	public void startUpload(File file) {
 		Log.i(getClass().getName(), "Requested upload from: " + file);
 		MultiValueMap<String, Object> upload = new LinkedMultiValueMap<String, Object>();
 		upload.add("file", new FileSystemResource(file));
-		for (HostInfo host : hosts) {
+		for (HostInfo host : hostModel.getSelectedHosts()) {
 			String finishedMessage = "";
 			try {
 				URI destination = new URI("http://" + host.getAddress() + ":" + host.getPort() + "/upload");

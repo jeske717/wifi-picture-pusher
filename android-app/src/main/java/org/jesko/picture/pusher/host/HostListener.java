@@ -6,8 +6,6 @@ import org.jesko.picture.pusher.beans.HostInfo;
 
 public interface HostListener {
 
-	void preferredHostFound(HostInfo host);
-	
 	void newHostFound(Set<HostInfo> allHosts);
 
 	void errorWithDiscovery(Throwable cause);

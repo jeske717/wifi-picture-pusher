@@ -10,4 +10,5 @@
     <string name="retry_send_on_failure">Retry On Failure</string>
     <string name="retry_send_on_failure_description">Check this if you want to periodically attempt to send pictures that failed to send successfully</string>
     <string name="accept">Accept</string>
+    <string name="retry_send_on_failure_key">retry_send_on_failure</string>
 </resources>
