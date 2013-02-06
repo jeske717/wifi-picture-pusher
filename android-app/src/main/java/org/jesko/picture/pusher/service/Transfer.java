@@ -13,7 +13,10 @@ public class Transfer {
 	private String fileName;
 	
 	@DatabaseField
-	private String endpoint;
+	private String address;
+	
+	@DatabaseField
+	private int port;
 
 	public long getId() {
 		return id;
@@ -23,10 +26,14 @@ public class Transfer {
 		return fileName;
 	}
 
-	public String getEndpoint() {
-		return endpoint;
+	public String getAddress() {
+		return address;
 	}
 
+	public int getPort() {
+		return port;
+	}
+	
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -35,8 +42,11 @@ public class Transfer {
 		this.fileName = fileName;
 	}
 
-	public void setEndpoint(String endpoint) {
-		this.endpoint = endpoint;
+	public void setAddress(String endpoint) {
+		this.address = endpoint;
 	}
 	
+	public void setPort(int port) {
+		this.port = port;
+	}
 }

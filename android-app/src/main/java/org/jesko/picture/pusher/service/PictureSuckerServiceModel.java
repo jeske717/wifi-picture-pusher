@@ -38,16 +38,11 @@ public class PictureSuckerServiceModel {
 	}
 	
 	public void startUpload(File file) {
-		Log.i(getClass().getName(), "Requested upload from: " + file);
-		MultiValueMap<String, Object> upload = new LinkedMultiValueMap<String, Object>();
-		upload.add("file", new FileSystemResource(file));
+		MultiValueMap<String, Object> upload = createUploadable(file);
 		for (HostInfo host : hostModel.getSelectedHosts()) {
 			String finishedMessage = "";
 			try {
-				URI destination = new URI("http://" + host.getAddress() + ":" + host.getPort() + "/upload");
-				Log.i(getClass().getName(), "Posting file to destination: " + destination);
-				UploadResult result = restTemplate.postForObject(destination, upload, UploadResult.class);
-				Log.i(getClass().getName(), "Result: " + result.getResult());
+				UploadResult result = postData(upload, host);
 				finishedMessage = result.getResult();
 			} catch (RestClientException e) {
 				Log.e(getClass().getName(), Log.getStackTraceString(e));
@@ -60,6 +55,17 @@ public class PictureSuckerServiceModel {
 			uploadListener.uploadCompleted("Picture transfer complete: " + finishedMessage);
 		}
 	}
+	
+	public void startUpload(Transfer transfer) {
+		HostInfo info = new HostInfo();
+		info.setAddress(transfer.getAddress());
+		info.setPort(transfer.getPort());
+		
+		try {
+			postData(createUploadable(new File(transfer.getFileName())), info);
+		} catch (URISyntaxException e) {
+		}
+	}
 
 	public void setUploadListener(UploadListener listener) {
 		this.uploadListener = listener;
@@ -67,6 +73,22 @@ public class PictureSuckerServiceModel {
 	
 	public void removeUploadListener() {
 		this.uploadListener = null;
+	}
+
+	private UploadResult postData(MultiValueMap<String, Object> upload,
+			HostInfo host) throws URISyntaxException {
+		URI destination = new URI("http://" + host.getAddress() + ":" + host.getPort() + "/upload");
+		Log.i(getClass().getName(), "Posting file to destination: " + destination);
+		UploadResult result = restTemplate.postForObject(destination, upload, UploadResult.class);
+		Log.i(getClass().getName(), "Result: " + result.getResult());
+		return result;
+	}
+	
+	private MultiValueMap<String, Object> createUploadable(File file) {
+		Log.i(getClass().getName(), "Requested upload from: " + file);
+		MultiValueMap<String, Object> upload = new LinkedMultiValueMap<String, Object>();
+		upload.add("file", new FileSystemResource(file));
+		return upload;
 	}
 
 }

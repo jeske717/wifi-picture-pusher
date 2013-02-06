@@ -27,6 +27,9 @@
         
         <activity android:name="SettingsActivity_"
             android:label="@string/settings"/>
+        
+        <service android:name=".service.RetryService_" />
     </application>
     
 </manifest> 
+ 
