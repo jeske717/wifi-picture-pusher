@@ -19,10 +19,13 @@ import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ItemClick;
+import com.googlecode.androidannotations.annotations.OptionsItem;
+import com.googlecode.androidannotations.annotations.OptionsMenu;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
 
 @EActivity(value = R.layout.main)
+@OptionsMenu(R.menu.main_menu)
 public class MainActivity extends RoboActivity implements HostListener {
 	
 	@Inject
@@ -56,6 +59,11 @@ public class MainActivity extends RoboActivity implements HostListener {
 	public void onDestroy() {
 		super.onDestroy();
 		removeHostListener();
+	}
+	
+	@OptionsItem
+	public void settingsMenu() {
+		SettingsActivity_.intent(this).start();
 	}
 
 	@Background
@@ -92,7 +100,6 @@ public class MainActivity extends RoboActivity implements HostListener {
 	
 	@Click
 	public void hostsSelected() {
-		removeHostListener();
 		PictureActivity_.intent(this).start();
 	}
 

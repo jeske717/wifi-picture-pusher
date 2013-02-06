@@ -19,10 +19,13 @@ import com.google.inject.Inject;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.OptionsItem;
+import com.googlecode.androidannotations.annotations.OptionsMenu;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.picture)
+@OptionsMenu(R.menu.main_menu)
 public class PictureActivity extends RoboActivity implements UploadListener {
 
 	private static final int REQUEST_CODE = 1;
@@ -45,6 +48,11 @@ public class PictureActivity extends RoboActivity implements UploadListener {
 	protected void onDestroy() {
 		super.onDestroy();
 		serviceModel.removeUploadListener();
+	}
+	
+	@OptionsItem
+	public void settingsMenu() {
+		SettingsActivity_.intent(this).start();
 	}
 	
 	@Click

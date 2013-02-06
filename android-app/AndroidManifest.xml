@@ -24,6 +24,9 @@
         
         <activity android:name="PictureActivity_" 
             android:label="@string/picture_activity_label"/>
+        
+        <activity android:name="SettingsActivity_"
+            android:label="@string/settings"/>
     </application>
     
 </manifest> 

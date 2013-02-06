@@ -6,4 +6,8 @@
     <string name="picture_activity_label">Pictures</string>
     <string name="main_activity_label">Connect to hosts</string>
     <string name="take_picture">Take Picture</string>
+    <string name="settings">Settings</string>
+    <string name="retry_send_on_failure">Retry On Failure</string>
+    <string name="retry_send_on_failure_description">Check this if you want to periodically attempt to send pictures that failed to send successfully</string>
+    <string name="accept">Accept</string>
 </resources>

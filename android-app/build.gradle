@@ -26,5 +26,6 @@ dependencies {
 	compile 'org.roboguice:roboguice:2.0'
 	compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.1.1'
+	compile 'com.j256.ormlite:ormlite-android:4.42'
 	compile project(':shared')
 }

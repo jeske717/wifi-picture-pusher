@@ -27,10 +27,12 @@ public class PictureSuckerServiceModel {
 	private final Set<HostInfo> hosts = new HashSet<HostInfo>();
 	private final RestTemplate restTemplate;
 	private UploadListener uploadListener;
+	private final RetryModel retryModel;
 	
 	@Inject
-	public PictureSuckerServiceModel(RestTemplate restTemplate) {
+	public PictureSuckerServiceModel(RestTemplate restTemplate, RetryModel retryModel) {
 		this.restTemplate = restTemplate;
+		this.retryModel = retryModel;
 		restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 	}
@@ -58,6 +60,7 @@ public class PictureSuckerServiceModel {
 			} catch (RestClientException e) {
 				Log.e(getClass().getName(), Log.getStackTraceString(e));
 				finishedMessage = e.getMessage();
+				retryModel.uploadFailed(file, host);
 			} catch (URISyntaxException e) {
 				Log.e(getClass().getName(), Log.getStackTraceString(e));
 				finishedMessage = e.getMessage();
