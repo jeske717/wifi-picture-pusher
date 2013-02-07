@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
     <PreferenceCategory android:title="@string/retry_settings">
 
       	<CheckBoxPreference android:key="retry_send_on_failure"
@@ -15,4 +16,18 @@
 		    android:dependency="retry_send_on_failure" />
 	
 	</PreferenceCategory>
+	
+    <PreferenceCategory android:title="@string/host_settings">
+    	
+    	<Preference android:title="@string/change_hosts"
+    	    android:summary="@string/change_hosts_description">
+    	    <intent android:action="android.intent.action.VIEW"
+    	        android:targetPackage="org.jesko.picture.pusher"
+    	        android:targetClass="org.jesko.picture.pusher.MainActivity_">
+    	        <extra android:name="@string/reconfigure_hosts" android:value="true" />
+   	        </intent>
+    	</Preference>
+    	
+    </PreferenceCategory>
+    
 </PreferenceScreen>

@@ -61,7 +61,11 @@ public class HostModel implements DiscoveryListener {
 			Log.e(getClass().getName(), "Unable to query for persisted hosts", e);
 		}
 		listener.newHostFound(hostCollectionModel.getAll());
-		
+
+		start();
+	}
+	
+	public void start() {
 		networkScanner.start(this);
 	}
 	

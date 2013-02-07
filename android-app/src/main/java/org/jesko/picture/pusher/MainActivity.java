@@ -41,11 +41,14 @@ public class MainActivity extends RoboActivity implements HostListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		obtainHost();
-		loaderDialog = new ProgressDialog(this);
-		loaderDialog.setTitle("Searching for picture suckers on the network");
-		loaderDialog.setMessage("Searching...");
-		loaderDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		loaderDialog.show();
+		
+		if(!isReconfiguring()) {
+			loaderDialog = new ProgressDialog(this);
+			loaderDialog.setTitle("Searching for picture suckers on the network");
+			loaderDialog.setMessage("Searching...");
+			loaderDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			loaderDialog.show();
+		}
 	}
 	
 	@AfterViews
@@ -68,12 +71,30 @@ public class MainActivity extends RoboActivity implements HostListener {
 	public void obtainHost() {
 		hostModel.setHostListener(this);
 	}
+	
+	@Background
+	public void obtainHostsForReconfiguration() {
+		addSelectedHosts(hostModel.getSelectedHosts());
+		hostModel.start();
+	}
+	
+	@UiThread
+	public void addSelectedHosts(Set<HostInfo> selectedHostInfos) {
+		hostAdapter.addAll(selectedHostInfos);
+		for(int i = 0; i < hostAdapter.getCount(); i++) {
+			hostList.setItemChecked(i, true);
+		}
+	}
 
 	@UiThread
 	@Override 
 	public void newHostFound(Set<HostInfo> allHosts) {
-		hostAdapter.addAll(allHosts);
-		if(allHosts.size() > 0) {
+		for (HostInfo hostInfo : allHosts) {
+			if (hostAdapter.getPosition(hostInfo) < 0) {
+				hostAdapter.add(hostInfo);
+			}
+		}
+		if (allHosts.size() > 0 && loaderDialog != null) {
 			loaderDialog.dismiss();
 		}
 	}
@@ -81,9 +102,13 @@ public class MainActivity extends RoboActivity implements HostListener {
 	@UiThread
 	@Override
 	public void savedHostsFound() {
-		hostsSelected();
+		if (isReconfiguring()) {
+			obtainHostsForReconfiguration();
+		} else {
+			hostsSelected();
+		}
 	}
-	
+
 	@UiThread
 	@Override
 	public void errorWithDiscovery(Throwable cause) {
@@ -105,5 +130,8 @@ public class MainActivity extends RoboActivity implements HostListener {
 	void removeHostListener() {
 		hostModel.removeHostListener();
 	}
-
+	
+	private boolean isReconfiguring() {
+		return getIntent().getExtras() != null && getIntent().getExtras().getBoolean(getString(R.string.reconfigure_hosts));
+	}
 }
