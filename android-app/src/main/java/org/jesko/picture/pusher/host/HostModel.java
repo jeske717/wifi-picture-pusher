@@ -1,18 +1,18 @@
 package org.jesko.picture.pusher.host;
 
-import java.util.HashSet;
+import java.sql.SQLException;
 import java.util.Set;
 
 import org.jesko.picture.pusher.beans.HostInfo;
 import org.jesko.picture.pusher.host.discovery.DiscoveryListener;
 import org.jesko.picture.pusher.host.discovery.NetworkScanner;
 
+import roboguice.inject.ContextSingleton;
 import android.util.Log;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
-@Singleton
+@ContextSingleton
 public class HostModel implements DiscoveryListener {
 
 	public static final String PREFERRED_HOST_KEY = "preferredHost";
@@ -21,18 +21,22 @@ public class HostModel implements DiscoveryListener {
 	private NetworkScanner networkScanner;
 	@Inject
 	private HostResolver hostResolver;
+	@Inject
+	private HostDao hostDao;
+	@Inject
+	private HostCollectionModel hostCollectionModel;
+	@Inject
+	private HostAdapter hostAdapter;
 	
 	private HostListener listener;
-	private final Set<HostInfo> hosts = new HashSet<HostInfo>();
-	private final Set<HostInfo> selectedHosts = new HashSet<HostInfo>();
 
 	@Override
 	public void compatibleServiceFound(String endpoint) {
 		HostInfo newHost = hostResolver.resolve(endpoint);
 		if(newHost != null) {
-			Log.i(getClass().getName(), "Found a host! : " + newHost.getAddress());
-			hosts.add(newHost);
-			listener.newHostFound(hosts);
+			Log.i(getClass().getName(), "Found a host!: " + newHost.getAddress());
+			hostCollectionModel.addHost(newHost);
+			listener.newHostFound(hostCollectionModel.getAll());
 		}
 	}
 
@@ -48,21 +52,44 @@ public class HostModel implements DiscoveryListener {
 	
 	public void setHostListener(HostListener listener) {
 		this.listener = listener;
-		listener.newHostFound(hosts);
+		try {
+			if(hostDao.countOf() > 0) {
+				listener.savedHostsFound();
+				return;
+			}
+		} catch (SQLException e) {
+			Log.e(getClass().getName(), "Unable to query for persisted hosts", e);
+		}
+		listener.newHostFound(hostCollectionModel.getAll());
 		
 		networkScanner.start(this);
 	}
 	
 	public void toggleHost(HostInfo host) {
-		if(selectedHosts.contains(host)) {
-			selectedHosts.remove(host);
-		} else {
-			selectedHosts.add(host);
-		}
+		hostCollectionModel.toggleHostInfo(host);
 	}
 	
 	public Set<HostInfo> getSelectedHosts() {
-		return selectedHosts;
+		try {
+			return hostAdapter.adapt(hostDao.queryForAll());
+		} catch (SQLException e) {
+			return hostCollectionModel.getSelectedHosts();
+		}
 	}
 
+	public void commit() {
+		Set<HostInfo> hostsToSave = hostCollectionModel.getSelectedHosts();
+		boolean successful = true;
+		for (Host host : hostAdapter.adapt(hostsToSave)) {
+			try {
+				hostDao.create(host);
+			} catch (SQLException e) {
+				Log.e(getClass().getName(), "Couldn't persist host", e);
+				successful = false;
+			}
+		}
+		if(successful) {
+			hostCollectionModel.clearAll();
+		}
+	}
 }

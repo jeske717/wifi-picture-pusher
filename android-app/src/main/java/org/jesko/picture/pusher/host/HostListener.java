@@ -9,4 +9,6 @@ public interface HostListener {
 	void newHostFound(Set<HostInfo> allHosts);
 
 	void errorWithDiscovery(Throwable cause);
+
+	void savedHostsFound();
 }

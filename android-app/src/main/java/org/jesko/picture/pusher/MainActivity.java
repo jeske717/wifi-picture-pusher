@@ -80,6 +80,12 @@ public class MainActivity extends RoboActivity implements HostListener {
 
 	@UiThread
 	@Override
+	public void savedHostsFound() {
+		hostsSelected();
+	}
+	
+	@UiThread
+	@Override
 	public void errorWithDiscovery(Throwable cause) {
 		Toast.makeText(this, getString(R.string.error_with_discovery_service) + ": " + cause.getMessage(), Toast.LENGTH_LONG).show();
 	}
@@ -91,6 +97,7 @@ public class MainActivity extends RoboActivity implements HostListener {
 	
 	@Click
 	public void hostsSelected() {
+		hostModel.commit();
 		PictureActivity_.intent(this).start();
 	}
 
@@ -98,4 +105,5 @@ public class MainActivity extends RoboActivity implements HostListener {
 	void removeHostListener() {
 		hostModel.removeHostListener();
 	}
+
 }
