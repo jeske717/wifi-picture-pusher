@@ -17,6 +17,14 @@
 	
 	</PreferenceCategory>
 	
+    <PreferenceCategory android:title="@string/camera_integration">
+        
+    	<CheckBoxPreference android:key="upload_pictures_from_camera"
+		    android:title="@string/upload_pictures_from_camera"
+		    android:summary="@string/upload_pictures_from_camera_description" />
+    	
+    </PreferenceCategory>
+	
     <PreferenceCategory android:title="@string/host_settings">
     	
     	<Preference android:title="@string/change_hosts"

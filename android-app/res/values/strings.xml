@@ -26,4 +26,8 @@
     <string name="change_hosts">Change Hosts</string>
     <string name="change_hosts_description">Manage which hosts should receive your pictures</string>
     <string name="reconfigure_hosts">reconfigure_hosts</string>
+    <string name="camera_integration">Camera Integration</string>
+    <string name="upload_pictures_from_camera_key">upload_pictures_from_camera</string>
+    <string name="upload_pictures_from_camera">Upload Camera Pictures</string>
+    <string name="upload_pictures_from_camera_description">Select this to have the app automatically upload pictures taken with the standard camera app</string>
 </resources>

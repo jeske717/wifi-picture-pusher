@@ -9,6 +9,8 @@ import org.jesko.picture.pusher.settings.SettingsActivity_;
 
 import roboguice.activity.RoboActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -49,6 +51,8 @@ public class MainActivity extends RoboActivity implements HostListener {
 			loaderDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 			loaderDialog.show();
 		}
+		
+		sendBroadcast(new Intent(Camera.ACTION_NEW_PICTURE));
 	}
 	
 	@AfterViews

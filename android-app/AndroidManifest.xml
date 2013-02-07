@@ -31,6 +31,13 @@
             android:label="@string/settings"/>
         
         <service android:name=".service.RetryService_" />
+        
+        <receiver android:name=".PhotoReceiver" android:enabled="true" android:permission="android.permission.CAMERA">
+            <intent-filter>
+                <action android:name="com.android.camera.NEW_PICTURE" />
+            	<action android:name="android.hardware.action.NEW_PICTURE" />
+            </intent-filter>
+        </receiver>
     </application>
     
 </manifest> 
