@@ -2,7 +2,7 @@ package org.jesko.picture.pusher;
 
 import java.io.File;
 
-import org.jesko.picture.pusher.service.ImageNamer;
+import org.jesko.picture.pusher.service.ImageNameCreator;
 import org.jesko.picture.pusher.service.PictureSuckerServiceModel;
 import org.jesko.picture.pusher.service.UploadListener;
 import org.jesko.picture.pusher.settings.SettingsActivity_;
@@ -34,7 +34,7 @@ public class PictureActivity extends RoboActivity implements UploadListener {
 	@Inject
 	private PictureSuckerServiceModel serviceModel;
 	@Inject
-	private ImageNamer imageNamer;
+	private ImageNameCreator imageNamer;
 	
 	@ViewById
 	GridLayout thumbnailView;
