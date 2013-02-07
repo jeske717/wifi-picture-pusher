@@ -11,4 +11,14 @@
     <string name="retry_send_on_failure_description">Check this if you want to periodically attempt to send pictures that failed to send successfully</string>
     <string name="accept">Accept</string>
     <string name="retry_send_on_failure_key">retry_send_on_failure</string>
+    <string name="retry_interval_key">retry_interval</string>
+    <string name="retry_interval">Retry Interval</string>
+    <string name="retry_interval_description">How often you would like to attempt to retry failed uploads</string>
+    <string name="interval_30_seconds">30 Seconds</string>
+    <string name="interval_1_minute">1 Minute</string>
+    <string name="interval_2_minutes">2 Minutes</string>
+    <string name="interval_5_minutes">5 Minutes</string>
+    <string name="interval_15_minutes">15 Minutes</string>
+    <string name="interval_30_minutes">30 Minutes</string>
+    <string name="interval_1_hour">1 Hour</string>
 </resources>

@@ -5,6 +5,7 @@ import java.util.Set;
 import org.jesko.picture.pusher.beans.HostInfo;
 import org.jesko.picture.pusher.host.HostListener;
 import org.jesko.picture.pusher.host.HostModel;
+import org.jesko.picture.pusher.settings.SettingsActivity_;
 
 import roboguice.activity.RoboActivity;
 import android.app.ProgressDialog;

@@ -25,7 +25,7 @@
         <activity android:name="PictureActivity_" 
             android:label="@string/picture_activity_label"/>
         
-        <activity android:name="SettingsActivity_"
+        <activity android:name=".settings.SettingsActivity_"
             android:label="@string/settings"/>
         
         <service android:name=".service.RetryService_" />

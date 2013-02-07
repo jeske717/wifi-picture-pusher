@@ -3,4 +3,12 @@
 	<CheckBoxPreference android:key="retry_send_on_failure"
 	    android:title="@string/retry_send_on_failure"
 	    android:summary="@string/retry_send_on_failure_description" />
+	
+	<org.jesko.picture.pusher.settings.IntegerListPreference android:key="retry_interval"
+	    android:title="@string/retry_interval"
+	    android:summary="@string/retry_interval_description" 
+	    android:defaultValue="60000"
+	    android:entries="@array/retry_intervals"
+	    android:entryValues="@array/retry_interval_values"
+	    android:dependency="retry_send_on_failure" />
 </PreferenceScreen>

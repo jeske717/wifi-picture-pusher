@@ -5,6 +5,7 @@ import java.io.File;
 import org.jesko.picture.pusher.service.ImageNamer;
 import org.jesko.picture.pusher.service.PictureSuckerServiceModel;
 import org.jesko.picture.pusher.service.UploadListener;
+import org.jesko.picture.pusher.settings.SettingsActivity_;
 
 import roboguice.activity.RoboActivity;
 import android.app.Activity;

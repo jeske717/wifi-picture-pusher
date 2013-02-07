@@ -1,13 +1,14 @@
-package org.jesko.picture.pusher;
+package org.jesko.picture.pusher.settings;
 
+import org.jesko.picture.pusher.R;
+
+import roboguice.activity.RoboPreferenceActivity;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.OptionsItem;
 import com.googlecode.androidannotations.annotations.OptionsMenu;
-
-import roboguice.activity.RoboPreferenceActivity;
 
 @EActivity
 @OptionsMenu(R.menu.settings_menu)
