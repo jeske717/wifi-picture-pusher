@@ -40,19 +40,8 @@ public class PictureSuckerServiceModel {
 	public void startUpload(File file) {
 		MultiValueMap<String, Object> upload = createUploadable(file);
 		for (HostInfo host : hostModel.getSelectedHosts()) {
-			String finishedMessage = "";
-			try {
-				UploadResult result = postData(upload, host);
-				finishedMessage = result.getResult();
-			} catch (RestClientException e) {
-				Log.e(getClass().getName(), Log.getStackTraceString(e));
-				finishedMessage = e.getMessage();
-				retryModel.uploadFailed(file, host);
-			} catch (URISyntaxException e) {
-				Log.e(getClass().getName(), Log.getStackTraceString(e));
-				finishedMessage = e.getMessage();
-			}
-			uploadListener.uploadCompleted("Picture transfer complete: " + finishedMessage);
+			String message = postData(upload, host);
+			uploadListener.uploadCompleted("Picture transfer complete: " + message);
 		}
 	}
 	
@@ -61,10 +50,7 @@ public class PictureSuckerServiceModel {
 		info.setAddress(transfer.getAddress());
 		info.setPort(transfer.getPort());
 		
-		try {
-			postData(createUploadable(new File(transfer.getFileName())), info);
-		} catch (URISyntaxException e) {
-		}
+		postData(createUploadable(new File(transfer.getFileName())), info);
 	}
 
 	public void setUploadListener(UploadListener listener) {
@@ -75,13 +61,20 @@ public class PictureSuckerServiceModel {
 		this.uploadListener = null;
 	}
 
-	private UploadResult postData(MultiValueMap<String, Object> upload,
-			HostInfo host) throws URISyntaxException {
-		URI destination = new URI("http://" + host.getAddress() + ":" + host.getPort() + "/upload");
-		Log.i(getClass().getName(), "Posting file to destination: " + destination);
-		UploadResult result = restTemplate.postForObject(destination, upload, UploadResult.class);
-		Log.i(getClass().getName(), "Result: " + result.getResult());
-		return result;
+	private String postData(MultiValueMap<String, Object> upload, HostInfo host)  {
+		try {
+			URI destination = new URI("http://" + host.getAddress() + ":" + host.getPort() + "/upload");
+			Log.i(getClass().getName(), "Posting file to destination: " + destination);
+			UploadResult result = restTemplate.postForObject(destination, upload, UploadResult.class);
+			Log.i(getClass().getName(), "Result: " + result.getResult());
+			return result.getResult();
+		} catch (RestClientException e) {
+			Log.e(getClass().getName(), Log.getStackTraceString(e));
+		} catch (URISyntaxException e) {
+		}
+		File file = ((FileSystemResource) upload.get("file").get(0)).getFile();
+		retryModel.uploadFailed(file, host);
+		return "An error occured while uploading your image.";
 	}
 	
 	private MultiValueMap<String, Object> createUploadable(File file) {

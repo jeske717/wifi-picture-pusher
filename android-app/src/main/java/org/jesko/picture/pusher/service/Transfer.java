@@ -1,10 +1,14 @@
 package org.jesko.picture.pusher.service;
 
+import java.io.Serializable;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "transfers", daoClass = TransferDao.class)
-public class Transfer {
+public class Transfer implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@DatabaseField(generatedId = true)
 	private long id;

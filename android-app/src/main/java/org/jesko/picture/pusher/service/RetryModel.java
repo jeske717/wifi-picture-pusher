@@ -42,7 +42,7 @@ public class RetryModel {
 			data.setPort(host.getPort());
 			try {
 				transferDao.create(data);
-				alarmManager.setRepeating(AlarmManager.RTC, 0, 15000, getRetryServiceIntent());
+				alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 15000, getRetryServiceIntent());
 			} catch (SQLException e) {
 				Log.e(getClass().getName(), "Failed to persist the failed transfer", e);
 			}

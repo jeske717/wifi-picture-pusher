@@ -1,8 +1,6 @@
 package org.jesko.picture.pusher.service;
 
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
 
 import roboguice.service.RoboService;
 import android.content.Intent;
@@ -34,26 +32,18 @@ public class RetryService extends RoboService {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
-		startRetries();
+		startRetry();
 	}
 	
 	@Background
-	public void startRetries() {
-		Set<Transfer> successfulRetries = new HashSet<Transfer>();
+	public void startRetry() {
 		try {
 			for (Transfer transfer : transferDao.queryForAll()) {
 				serviceModel.startUpload(transfer);
-				successfulRetries.add(transfer);
+				transferDao.delete(transfer);
 			}
 		} catch (SQLException e) {
-			Log.e(getClass().getName(), "Unable to query for the outstanding transfers", e);
-		}
-		
-		try {
-			transferDao.delete(successfulRetries);
-			Log.i(getClass().getName(), "Removing " + successfulRetries.size() + " successful retries");
-		} catch (SQLException e) {
-			Log.e(getClass().getName(), "Unable to delete transfer", e);
+			Log.e(getClass().getName(), "Unable to query the database", e);
 		}
 	}
 	
