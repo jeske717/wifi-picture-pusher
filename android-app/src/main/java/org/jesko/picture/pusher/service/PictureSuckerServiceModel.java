@@ -41,7 +41,9 @@ public class PictureSuckerServiceModel {
 		MultiValueMap<String, Object> upload = createUploadable(file);
 		for (HostInfo host : hostModel.getSelectedHosts()) {
 			String message = postData(upload, host);
-			uploadListener.uploadCompleted(message);
+			if (uploadListener != null) {
+				uploadListener.uploadCompleted(message);
+			}
 		}
 	}
 	

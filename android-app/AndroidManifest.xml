@@ -32,10 +32,10 @@
         
         <service android:name=".service.RetryService_" />
         
-        <receiver android:name=".PhotoReceiver" android:enabled="true" android:permission="android.permission.CAMERA">
+        <receiver android:name=".PhotoReceiver" android:enabled="false">
             <intent-filter>
-                <action android:name="com.android.camera.NEW_PICTURE" />
             	<action android:name="android.hardware.action.NEW_PICTURE" />
+            	<data android:mimeType="image/*" />
             </intent-filter>
         </receiver>
     </application>
