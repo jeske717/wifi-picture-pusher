@@ -27,12 +27,14 @@ public class PictureSuckerServiceModel {
 	private UploadListener uploadListener;
 	private final RetryModel retryModel;
 	private final HostModel hostModel;
+	private final NotificationModel notificationModel;
 	
 	@Inject
-	public PictureSuckerServiceModel(RestTemplate restTemplate, RetryModel retryModel, HostModel hostModel) {
+	public PictureSuckerServiceModel(RestTemplate restTemplate, RetryModel retryModel, HostModel hostModel, NotificationModel notificationModel) {
 		this.restTemplate = restTemplate;
 		this.retryModel = retryModel;
 		this.hostModel = hostModel;
+		this.notificationModel = notificationModel;
 		restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 	}
@@ -69,6 +71,7 @@ public class PictureSuckerServiceModel {
 			Log.i(getClass().getName(), "Posting file to destination: " + destination);
 			UploadResult result = restTemplate.postForObject(destination, upload, UploadResult.class);
 			Log.i(getClass().getName(), "Result: " + result.getResult());
+			notificationModel.notifyImageUploaded();
 			return "Picture transfer complete: " + result.getResult();
 		} catch (RestClientException e) {
 			Log.e(getClass().getName(), Log.getStackTraceString(e));
