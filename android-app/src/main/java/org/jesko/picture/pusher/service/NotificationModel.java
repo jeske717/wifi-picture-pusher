@@ -1,5 +1,6 @@
 package org.jesko.picture.pusher.service;
 
+import org.jesko.picture.pusher.PictureActivity;
 import org.jesko.picture.pusher.PictureActivity_;
 import org.jesko.picture.pusher.R;
 
@@ -26,15 +27,18 @@ public class NotificationModel {
 	private SharedPreferences sharedPreferences;
 	
 	public void notifyImageUploaded() {
-		if(!sharedPreferences.getBoolean(context.getString(R.string.show_notifications_on_success_key), false)) {
-			return;
+		if(shouldDisplayNotification()) {
+			Intent intent = PictureActivity_.intent(context).get();
+			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+			Notification.Builder builder = new Notification.Builder(context);
+			builder.setContentTitle("Image upload complete").setContentText("One or more images have been uploaded").setContentIntent(pendingIntent).setSmallIcon(R.drawable.app_icon);
+			Notification notification = builder.getNotification();
+			notification.flags |= Notification.FLAG_AUTO_CANCEL;
+			notificationManager.notify(NOTIFICATION_ID, notification);
 		}
-		Intent intent = PictureActivity_.intent(context).get();
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-		Notification.Builder builder = new Notification.Builder(context);
-		builder.setContentTitle("Image upload complete").setContentText("One or more images have been uploaded").setContentIntent(pendingIntent).setSmallIcon(R.drawable.app_icon);
-		Notification notification = builder.getNotification();
-		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		notificationManager.notify(NOTIFICATION_ID, notification);
+	}
+
+	private boolean shouldDisplayNotification() {
+		return !(context instanceof PictureActivity) && sharedPreferences.getBoolean(context.getString(R.string.show_notifications_on_success_key), false);
 	}
 }
