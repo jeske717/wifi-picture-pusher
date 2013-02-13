@@ -9,6 +9,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import com.google.inject.Inject;
 
@@ -21,8 +22,13 @@ public class NotificationModel {
 	private Context context;
 	@Inject
 	private NotificationManager notificationManager;
+	@Inject
+	private SharedPreferences sharedPreferences;
 	
 	public void notifyImageUploaded() {
+		if(!sharedPreferences.getBoolean(context.getString(R.string.show_notifications_on_success_key), false)) {
+			return;
+		}
 		Intent intent = PictureActivity_.intent(context).get();
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 		Notification.Builder builder = new Notification.Builder(context);

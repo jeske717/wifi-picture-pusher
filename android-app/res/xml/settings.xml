@@ -24,6 +24,14 @@
 		    android:summary="@string/upload_pictures_from_camera_description" />
     	
     </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/notifications">
+        
+    	<CheckBoxPreference android:key="show_notifications_on_success"
+		    android:title="@string/show_notifications_on_success"
+		    android:summary="@string/show_notifications_on_success_description" />
+    	
+    </PreferenceCategory>
 	
     <PreferenceCategory android:title="@string/host_settings">
     	

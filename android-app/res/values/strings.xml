@@ -30,4 +30,8 @@
     <string name="upload_pictures_from_camera_key">upload_pictures_from_camera</string>
     <string name="upload_pictures_from_camera">Upload Camera Pictures</string>
     <string name="upload_pictures_from_camera_description">Select this to have the app automatically upload pictures taken with the standard camera app</string>
+    <string name="notifications">Notifications</string>
+    <string name="show_notifications_on_success_key">show_notifications_on_success</string>
+    <string name="show_notifications_on_success">Show notifications</string>
+    <string name="show_notifications_on_success_description">Select this if you want to receive a notification when an image is uploaded from outside the app</string>
 </resources>
