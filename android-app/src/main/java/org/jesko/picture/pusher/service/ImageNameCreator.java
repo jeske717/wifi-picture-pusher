@@ -1,7 +1,6 @@
 package org.jesko.picture.pusher.service;
 
 import java.io.File;
-import java.util.UUID;
 
 import roboguice.inject.ContextSingleton;
 import android.content.Context;
@@ -12,17 +11,22 @@ import com.google.inject.Inject;
 @ContextSingleton
 public class ImageNameCreator {
 
-	@Inject
-	private Context context;
+	private final Context context;
+	private final ImageNameModel imageNameModel;
+	private final UuidGenerator uuidGenerator;
 	
 	@Inject
-	private ImageNameModel imageNameModel;
+	public ImageNameCreator(Context context, ImageNameModel imageNameModel, UuidGenerator uuidGenerator) {
+		this.context = context;
+		this.imageNameModel = imageNameModel;
+		this.uuidGenerator = uuidGenerator;
+	}
 	
 	public File generateNextFile() {
-		File file = new File(context.getExternalFilesDir(null), UUID.randomUUID().toString() + ".jpg");
+		File file = new File(context.getExternalFilesDir(null), uuidGenerator.generate() + ".jpg");
 		Log.i(getClass().getName(), "New filename for image capture: " + file.getAbsolutePath());
 		imageNameModel.setCurrentFile(file);
-		return imageNameModel.getCurrentFile();
+		return file;
 	}
 	
 	public File getCurrentFile() {
