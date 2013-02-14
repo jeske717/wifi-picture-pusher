@@ -3,6 +3,7 @@ package org.jesko.picture.pusher.service;
 import org.jesko.picture.pusher.PictureActivity;
 import org.jesko.picture.pusher.PictureActivity_;
 import org.jesko.picture.pusher.R;
+import org.jesko.picture.pusher.external.PhotoGalleryUploadActivity;
 
 import roboguice.inject.ContextSingleton;
 import android.app.Notification;
@@ -39,6 +40,8 @@ public class NotificationModel {
 	}
 
 	private boolean shouldDisplayNotification() {
-		return !(context instanceof PictureActivity) && sharedPreferences.getBoolean(context.getString(R.string.show_notifications_on_success_key), false);
+		return !(context instanceof PictureActivity) 
+				&& !(context instanceof PhotoGalleryUploadActivity) 
+				&& sharedPreferences.getBoolean(context.getString(R.string.show_notifications_on_success_key), false);
 	}
 }

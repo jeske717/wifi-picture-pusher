@@ -17,7 +17,7 @@
     <application android:label="@string/app_name" 
         			android:icon="@drawable/app_icon">
         <activity android:name="MainActivity_"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,12 +32,20 @@
         
         <service android:name=".service.RetryService_" />
         
-        <receiver android:name=".PhotoReceiver" android:enabled="false">
+        <receiver android:name=".external.PhotoReceiver" android:enabled="false">
             <intent-filter>
             	<action android:name="android.hardware.action.NEW_PICTURE" />
             	<data android:mimeType="image/*" />
             </intent-filter>
         </receiver>
+        
+        <activity android:name=".external.PhotoGalleryUploadActivity_" android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+    			<category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
     </application>
     
 </manifest> 

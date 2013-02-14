@@ -1,7 +1,7 @@
 package org.jesko.picture.pusher.settings;
 
-import org.jesko.picture.pusher.PhotoReceiver;
 import org.jesko.picture.pusher.R;
+import org.jesko.picture.pusher.external.PhotoReceiver;
 
 import roboguice.activity.RoboPreferenceActivity;
 import android.content.ComponentName;
