@@ -20,13 +20,17 @@ public class NotificationModel {
 
 	private static final int NOTIFICATION_ID = 7823;
 	
-	@Inject
-	private Context context;
-	@Inject
-	private NotificationManager notificationManager;
-	@Inject
-	private SharedPreferences sharedPreferences;
+	private final Context context;
+	private final NotificationManager notificationManager;
+	private final SharedPreferences sharedPreferences;
 	
+	@Inject
+	public NotificationModel(Context context, NotificationManager notificationManager, SharedPreferences sharedPreferences) {
+		this.context = context;
+		this.notificationManager = notificationManager;
+		this.sharedPreferences = sharedPreferences;
+	}
+
 	public void notifyImageUploaded() {
 		if(shouldDisplayNotification()) {
 			Intent intent = PictureActivity_.intent(context).get();
