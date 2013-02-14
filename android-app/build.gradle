@@ -28,4 +28,9 @@ dependencies {
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.1.1'
 	compile 'com.j256.ormlite:ormlite-android:4.42'
 	compile project(':shared')
+
+	testCompile 'junit:junit:4.8.2'
+	testCompile 'com.pivotallabs:robolectric:1.1'
+	testCompile 'org.mockito:mockito-all:1.9.5'
+	testCompile 'com.google.android:android:4.0.1.2'
 }
