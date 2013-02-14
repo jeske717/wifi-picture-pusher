@@ -1,7 +1,8 @@
-package org.jesko.picture.pusher.external;
+package org.jesko.picture.pusher;
 
 import java.io.File;
 
+import org.jesko.picture.pusher.external.MediaStoreHelper;
 import org.jesko.picture.pusher.service.PictureSuckerServiceModel;
 
 import roboguice.receiver.RoboBroadcastReceiver;

@@ -32,7 +32,7 @@
         
         <service android:name=".service.RetryService_" />
         
-        <receiver android:name=".external.PhotoReceiver" android:enabled="false">
+        <receiver android:name=".PhotoReceiver" android:enabled="false">
             <intent-filter>
             	<action android:name="android.hardware.action.NEW_PICTURE" />
             	<data android:mimeType="image/*" />
