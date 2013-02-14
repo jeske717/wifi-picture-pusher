@@ -11,10 +11,14 @@ import android.net.wifi.WifiManager;
 @ContextSingleton
 public class NetworkStatusModel {
 
-	@Inject
 	private ConnectivityManager connectivityManager;
-	@Inject
 	private WifiManager wifiManager;
+	
+	@Inject
+	public NetworkStatusModel(ConnectivityManager connectivityManager, WifiManager wifiManager) {
+		this.connectivityManager = connectivityManager;
+		this.wifiManager = wifiManager;
+	}
 	
 	public String getCurrentConnectedSsid() {
 		NetworkInfo networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
