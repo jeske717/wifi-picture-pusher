@@ -68,9 +68,7 @@ public class PictureSuckerServiceModel {
 	private String postData(MultiValueMap<String, Object> upload, HostInfo host)  {
 		try {
 			URI destination = new URI("http://" + host.getAddress() + ":" + host.getPort() + "/upload");
-			Log.i(getClass().getName(), "Posting file to destination: " + destination);
 			UploadResult result = restTemplate.postForObject(destination, upload, UploadResult.class);
-			Log.i(getClass().getName(), "Result: " + result.getResult());
 			notificationModel.notifyImageUploaded();
 			return "Picture transfer complete: " + result.getResult();
 		} catch (RestClientException e) {
@@ -83,7 +81,6 @@ public class PictureSuckerServiceModel {
 	}
 	
 	private MultiValueMap<String, Object> createUploadable(File file) {
-		Log.i(getClass().getName(), "Requested upload from: " + file);
 		MultiValueMap<String, Object> upload = new LinkedMultiValueMap<String, Object>();
 		upload.add("file", new FileSystemResource(file));
 		return upload;
